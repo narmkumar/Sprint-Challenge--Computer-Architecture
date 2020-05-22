@@ -172,8 +172,6 @@ class CPU:
 
         print(f"TRACE: %02X | %02X %02X %02X |" % (
             self.pc,
-            #self.fl,
-            #self.ie,
             self.ram_read(self.pc),
             self.ram_read(self.pc + 1),
             self.ram_read(self.pc + 2)
@@ -197,7 +195,7 @@ class CPU:
         HLT  = 0b00000001
         running = True
         while running:
-            # store instruction in ram to 'Instruction Register'
+
             ir = self.ram_read(self.pc)
             inst_len = (ir >> 6) + 0b1
             is_ALU = (ir & 0b00100000) >> 5
@@ -210,7 +208,7 @@ class CPU:
                 x = self.ram_read(self.pc + 1)
             if inst_len > 2:
                 y = self.ram_read(self.pc + 2)
-            #breakpoint()
+
             if is_ALU:
                 self.alu(self.ops[ir], x, y)
                 self.pc += inst_len
